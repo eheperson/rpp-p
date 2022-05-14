@@ -5,30 +5,28 @@ buildDIR="${rootDir}/build"
 installDIR="${rootDir}/app"
 
 # delete and re-create build directory at every time
+# if [ ! -d ${buildDIR} ]; then
+#   mkdir ${buildDIR}
+# else
+#   rm -r ${buildDIR}
+#   mkdir ${buildDIR}
+# fi
+# # create build dir if dows not exists
 if [ ! -d ${buildDIR} ]; then
-  mkdir ${buildDIR}
-else
-  rm -r ${buildDIR}
   mkdir ${buildDIR}
 fi
 
 # delete and re-create install directory at every time
-if [ ! -d ${installDIR} ]; then
-  mkdir ${installDIR}
-else
-  rm -r ${installDIR}
-  mkdir ${installDIR}
-fi
-
-# # create build dir if dows not exists
-# if [ ! -d ${buildDIR} ]; then
-#   mkdir ${buildDIR}
-# fi
-
-# # create install dir if dows not exists
 # if [ ! -d ${installDIR} ]; then
 #   mkdir ${installDIR}
+# else
+#   rm -r ${installDIR}
+#   mkdir ${installDIR}
 # fi
+# # create install dir if dows not exists
+if [ ! -d ${installDIR} ]; then
+  mkdir ${installDIR}
+fi
 
 # -----------------------------------
 #       CONFIGURE

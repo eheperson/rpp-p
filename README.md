@@ -1,11 +1,11 @@
-# rpp-m (rec-play-pause-nano)
+# rpp-p (rec-play-pause-nano)
  template repository for cross-platform cpp development based on CMake build system Resources
 
 > **NOTE :** This repository is tested only on MacOS and debian based Linux Distributions. Will be updated for Windows in the future.
 
 ### Who is this repository for?
 * If project based on CMakeLists build system.
-* If project requires developing some extra libs without 3rd dependencies.
+* If project requires developing some extra libs with 3rd dependencies.
 
 ### Requirements:
 * cmake
@@ -16,7 +16,7 @@
 ## Project Structure
 ### Zero Files/Dirs :
 * **`main.cpp` file :** Your C++ file.
-* **`rppnConfig.h.in` file :** Configuration file of the project.
+* **`rpppConfig.h.in` file :** Configuration file of the project.
 * **`module` directory :**  Contains your extra modules
 
 ### Created Files/Dirs :
@@ -26,7 +26,7 @@
 ## Preparing Development Environment
     ```
     # clone the repo
-    git clone git@github.com:eheperson/rpp-m.git
+    git clone git@github.com:eheperson/rpp-p.git
 
     # change access rights of compile.sh file
     chmod +x compile.sh
@@ -47,7 +47,7 @@ As a first step, create an executable like `'temp.cpp'`.
 add_executable(temp temp.cpp)
 
 # Step 2 : adding binary tree to the search path (CMakeLists.txt line:35)
-# if you will not use rppnConfig.h in your executable, this step is unnecessary.
+# if you will not use rpppConfig.h in your executable, this step is unnecessary.
 target_include_directories(temp PUBLIC "${PROJECT_BINARY_DIR}") 
 
 # Example to adding modules path to search path for new executable (CMakeLists.txt line:41)
@@ -105,6 +105,17 @@ To the purpose of maintainibly, test module renamed as `'${MODULE_1}'` in the `'
             CMakeLists.txt
             MyLib.h
             MyExecutable.cxx
+    ```
+
+
+## Adding external dependencies :
+
+* clone the sdl repository and check the `external/CMakeLists.txt` file to see the linking and building processes.
+
+    ```
+        # clonning from github
+        cd external
+        git clone git@github.com:libsdl-org/SDL.git
     ```
 
 ## Extra Info:
