@@ -38,7 +38,7 @@ echo "" && echo " Configure Begin" &&echo ""
 # cmake -G "MinGW Makefiles" -DUSE_EXAMPLELIB=ON -S ${rootDir} -B ${buildDir}
 
 # cmake -DUSE_ADDER=OFF -S . -B ${buildDir}
-cmake -S ${rootDir} -B ${buildDir}
+cmake -DCMAKE_INSTALL_PREFIX=${installDir} -S ${rootDir} -B ${buildDir}
 
 echo "" && echo " Configure End" && echo ""
 
@@ -64,7 +64,8 @@ echo "" && echo " Build End" && echo ""
 # -----------------------------------
 echo "" && echo " Install Begin" && echo ""
 
-cd ${buildDir} && cmake --install . --prefix ${installDir} && cd ${rootDir}
+# cd ${buildDir} && cmake --install . --prefix ${installDir} && cd ${rootDir}
+cd ${buildDir} && cmake --install . && cd ${rootDir}
 # if cmake version below than 3.13 use below
 # cd ${buildDir} && sudo make install  && cd ${rootDir}
 
