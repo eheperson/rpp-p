@@ -38,16 +38,25 @@ set(MODULES_DIR ${CMAKE_SOURCE_DIR}/modules)
 add_subdirectory(${MODULES_DIR})
 
 # add the binary tree to the search path for include files# so that we will find rpppConfig.h
-target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC "${PROJECT_BINARY_DIR}")
-# target_include_directories(temp PUBLIC "${PROJECT_BINARY_DIR}") #example to add new executable : Step2
+target_include_directories(
+  ${CMAKE_PROJECT_NAME} 
+  PUBLIC "${MODULES_DIR}"
+  PUBLIC "${PROJECT_BINARY_DIR}"
+  PUBLIC ${EXTRA_INCLUDE_DIRS}
+)
 
-# add the modules dir to the search path so that we will find ${MODULE_1}
-target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC "${MODULES_DIR}")
-# target_include_directories(temp PUBLIC "${MODULES_DIR}") #example to adding modules path to search path for new executable : Step3
+target_link_directories( 
+    ${PROJECT_NAME} 
+    PUBLIC ${EXTRA_LIB_DIR}
+)
 
-# target_link_libraries(${PROJECT_NAME} PUBLIC ${EXTERNALS})
-target_link_libraries(${CMAKE_PROJECT_NAME} SDL_GENERAL)
+target_link_libraries(
+  ${CMAKE_PROJECT_NAME} 
+  PUBLIC ${EXTRA_LINKS}
+  SDL_GENERAL
+)
 
+set(CMAKE_INSTALL_RPATH SDL_GENERAL)
 
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 
