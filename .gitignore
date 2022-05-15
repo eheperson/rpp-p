@@ -2,6 +2,7 @@
 **/out
 **/external/builds
 **/external/sdl
+
 .vscode
 !.vscode/launch.json
 .DS_Store
