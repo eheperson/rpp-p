@@ -5,32 +5,6 @@ cmake_minimum_required(VERSION 3.22.2 FATAL_ERROR)
 # ${PROJECT_NAME}
 project(rppp VERSION 1.0.0)
 
-# #------------------------------------------------------------------------------------------------------------
-# # RPATH Settings
-
-# set(CMAKE_MACOSX_RPATH 1)
-
-# # # use, i.e. don't skip the full RPATH for the build tree
-# set(CMAKE_SKIP_BUILD_RPATH FALSE)
-
-# # # when building, don't use the install RPATH already
-# # # (but later on when installing)
-# set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-
-# set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-
-# # # add the automatically determined parts of the RPATH
-# # # which point to directories outside the build tree to the install RPATH
-# set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-# set(INSTALL_RPATH_USE_LINK_PATH TRUE)
-
-# # # the RPATH to be used when installing, but only if it's not a system directory
-# list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
-# if("${isSystemDir}" STREQUAL "-1")
-#     set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-# endif("${isSystemDir}" STREQUAL "-1")
-# #------------------------------------------------------------------------------------------------------------
-
 # Specify C++ standards
 # C++ standards declerations must be above the call to add_executable
 set(CMAKE_CXX_STANDARD 11)
@@ -47,6 +21,32 @@ if(APPLE)
     enable_language(OBJC)
 endif()
 
+#------------------------------------------------------------------------------------------------------------
+# RPATH Settings
+
+set(CMAKE_MACOSX_RPATH 1)
+
+# # use, i.e. don't skip the full RPATH for the build tree
+set(CMAKE_SKIP_BUILD_RPATH FALSE)
+
+# # when building, don't use the install RPATH already
+# # (but later on when installing)
+set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+
+# # add the automatically determined parts of the RPATH
+# # which point to directories outside the build tree to the install RPATH
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+set(INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+# # the RPATH to be used when installing, but only if it's not a system directory
+list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
+if("${isSystemDir}" STREQUAL "-1")
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+endif("${isSystemDir}" STREQUAL "-1")
+#------------------------------------------------------------------------------------------------------------
+
 # Configure the header file to pass the version number to the source code
 configure_file(rpppConfig.h.in rpppConfig.h)
 
@@ -57,84 +57,33 @@ add_executable(${CMAKE_PROJECT_NAME} main.cpp)
 # add the binary tree to the search path for include files# so that we will find rppfConfig.h
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR})
 
+# target_include_directories(temp PUBLIC "${PROJECT_BINARY_DIR}") #example to add new executable : Step2
+
 # setings for modules dir
 set(MODULES_DIR ${CMAKE_SOURCE_DIR}/modules)
 add_subdirectory(${MODULES_DIR})
+
 # settings for external dir
 set(EXTERNAL_DIR ${CMAKE_SOURCE_DIR}/external)
-set(SOURCES_DIR ${EXTERNAL_DIR}/sources)
+add_subdirectory(${EXTERNAL_DIR})
 
-#------------------------------------------------------------------------------------------------------------
-# download all git submodules of they do not downloaded
-find_package(Git QUIET)
-if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
-# Update submodules as needed
-    option(GIT_SUBMODULE "Check submodules during build" ON)
-    if(GIT_SUBMODULE)
-        message(STATUS "Submodule update")
-        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
-                        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                        RESULT_VARIABLE GIT_SUBMOD_RESULT)
-        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-        endif()
-    endif()
-endif()
-#
-#------------------------------------------------------------------------------------------------------------
-# Check OpenCV Module
-if(NOT EXISTS "${SOURCES_DIR}/SDL/CMakeLists.txt")
-    message(FATAL_ERROR "The sdl2 submodules was not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
-endif()
-
-find_package(SDL2 REQUIRED PATHS "${EXTERNAL_DIR}/sdl" NO_DEFAULT_PATH)
-if(SDL2_FOUND)
-    # message(STATUS "opencv found! as ${OpenCV}")
-    # list(APPEND EXTRA_LIB_DIRS ${OpenCV_LIBS})
-    list(APPEND EXTRA_INCLUDE_DIRS ${SDL2_INCLUDE_DIRS})
-    list(APPEND EXTRA_LINKS ${SDL2_LIBRARIES})
-    message(STATUS "OpenCV Libs : ${SDL2_LIBRARIES}")
-    message(STATUS "Include Dirs : ${SDL2_INCLUDE_DIRS}")
-    include_directories(${SDL2_INCLUDE_DIRS})
-
-else()
-    message(FATAL_ERROR "no sdl, sad day")
-endif()
-
-
-target_include_directories( 
-    ${PROJECT_NAME} 
-    # PUBLIC ${EXTRA_INCLUDE_DIRS}
-    PUBLIC ${SDL2_INCLUDE_DIRS}
-) 
-# #
-target_link_directories( 
-    ${PROJECT_NAME} 
-    PUBLIC ${EXTRA_LIB_DIR}
-    # ${SOURCES_DIR}/opencv
-)
+target_include_directories(${PROJECT_NAME} PUBLIC ${EXTRA_INCLUDE_DIRS}) 
+# 
+target_link_directories(${PROJECT_NAME} PUBLIC ${EXTRA_LIB_DIRS})
 #
 # link the library to our project
-target_link_libraries(
-    ${PROJECT_NAME} 
-    # PUBLIC ${EXTRA_LINKS}
-    ${SDL2_LIBRARIES}
-    # SD2
-    # SDLMain
-)
-# ------------------------------------------------------------------------------------
+target_link_libraries(${PROJECT_NAME} PUBLIC ${EXTRA_LINKS})
 
-
-
-
-# ------------------------------------------------------------------------------------
+# linking new executable  with our modules : Step3
+# target_include_directories(temp PUBLIC ${EXTRA_INCLUDE_DIRS}) 
+# target_link_directories(temp PUBLIC ${EXTRA_LIB_DIRS})
+# target_link_libraries(temp PUBLIC ${EXTRA_LINKS})
 
 # ---------------------- Installing Begin ----------------------
+# add the install targets
 install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin)
+# install(TARGETS temp DESTINATION bin) # install the new executable : Step4 (installation)
 install(FILES "${PROJECT_BINARY_DIR}/rpppConfig.h" DESTINATION include)
-# install(FILES "${EXTERNAL_DIR}/sdl/bin/sdl2-config" DESTINATION bin)
-# install(DIRECTORY ${EXTERNAL_DIR}/sdl/lib/ DESTINATION lib)
-# install(DIRECTORY ${EXTERNAL_DIR}/sdl/include/ DESTINATION include)
 # ---------------------- Installing End ------------------------
 
 

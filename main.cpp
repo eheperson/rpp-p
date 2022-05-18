@@ -1,6 +1,9 @@
 #include <SDL.h>
 #include <iostream>
 
+#include <rpppConfig.h>
+
+
 #ifdef USE_MODULE_1
     #include "TestLib.h"
 #endif
