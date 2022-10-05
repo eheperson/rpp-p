@@ -48,7 +48,11 @@
 
 ## Development
 
-### Step Zero (Adding More 3Rd dependency): 
+### Step Zero (Adding More 3Rd dependency):
+
+> **-**  
+> **YOU HAVE TO DO THIS STEP TO BE ABLE BUILD, SDL LIBRARY IS USED AS AN EXAMPLE, FOLLOW SAME APPROACH FOR ANY OTHER**  
+> **-**
 
 As a step zero, you must link your 3Rd dependency to the project. There are 2 different options here for that purpose:
 
