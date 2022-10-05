@@ -64,7 +64,12 @@ Here are the steps of building 3Rd dependenc from source and link it
 
 1. If your 3Rd dependency on GitHub, you can add it easily as a git project submodule:
 ```
-    cd ./external/sources
+    # create a dir to store external dep source codes (at ./external)
+    cd ./external
+    mkdir sources
+
+    # add as submodule
+    cd ./sources
     git submodule add git@github.com:libsdl-org/SDL.git
 
     # or just use git clone command
