@@ -25,7 +25,7 @@
 ## Project Structure
 ### Zero Files/Dirs :
 * **`main.cpp` file :** Your C++ file.
-* **`rppnConfig.h.in` file :** Configuration file of the project.
+* **`rpppConfig.h.in` file :** Configuration file of the project.
 * **`bake.sh` file :**  Baker file for tests.
 * **`modules` directory :**  Contains your extra modules.
 * **`external` directory :**  Contains your external dependencies source codes and binaries.
@@ -38,7 +38,7 @@
 ## Preparing Development Environment
 ```
     # clone the repo
-    git clone git@github.com:eheperson/rpp-n.git
+    git clone git@github.com:eheperson/rpp-p.git
 
     # change access rights of compile.sh file
     chmod +x bake.sh
@@ -48,7 +48,7 @@
 
 ## Development
 
-### Step Zero (Adding Mode 3Rd dependency): 
+### Step Zero (Adding More 3Rd dependency): 
 
 As a step zero, you must link your 3Rd dependency to the project. There are 2 different options here for that purpose:
 
@@ -68,32 +68,26 @@ Here are the steps of building 3Rd dependenc from source and link it
     git clone git@github.com:libsdl-org/SDL.git
 ```
 
-2. Create a build folder outside of the source code directory :
-```
-    # create build folder
-    mkdir -p ../sdl2_build
-```
-
-3. Configure the 3Rd dependency to prepare it for cmake build:
+2. Configure the 3Rd dependency to prepare it for cmake build:
 ```
     cd ./SDL
 
     # configure
     cmake -DCMAKE_BUILD_TYPE=Release \
-      -DCMAKE_INSTALL_PREFIX=../../sdl2 \
+      -DCMAKE_INSTALL_PREFIX=../../sdl \
       -S . \
-      -B ../sdl2_build 
+      -B ../sdl_build 
 ```
 
-4. Start build process of 3Rd dependency : 
+3. Start build process of 3Rd dependency : 
 ```
     cd ../ # corresponds to ./external/sources
 
     # option 1
-    cmake --build ./sdl2_build -v
+    cmake --build ./sdl_build -v
 
     # option 2
-    cd ./sdl2_build
+    cd ./sdl_build
     make -j7
 ```
 
@@ -102,10 +96,10 @@ Here are the steps of building 3Rd dependenc from source and link it
     cd ../ # correspond to ./external directory
     
     # option 1
-    cmake --install ./sources/sdl2_build --prefix sdl2
+    cmake --install ./sources/sdl_build --prefix sdl
 
     # option 2 
-    cd ./sources/sdl2_build
+    cd ./sources/sdl_build
     make install
 ```
 
@@ -180,7 +174,7 @@ As a first step, create an executable like `'temp.cpp'`.
 add_executable(temp temp.cpp)
 
 # Step 2 : adding binary tree to the search path (CMakeLists.txt line:60)
-# if you will not use rppnConfig.h in your executable, this step is unnecessary.
+# if you will not use rpppConfig.h in your executable, this step is unnecessary.
 target_include_directories(temp PUBLIC "${PROJECT_BINARY_DIR}") 
 
 # Step 3 : linking new executable with our modules (CMakeLists.txt line:77, line:78, line:79)

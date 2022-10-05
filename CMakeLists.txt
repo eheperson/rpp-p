@@ -54,7 +54,7 @@ configure_file(rpppConfig.h.in rpppConfig.h)
 add_executable(${CMAKE_PROJECT_NAME} main.cpp)
 # add_executable(temp temp.cpp) #example to add new executable : Step1
 
-# add the binary tree to the search path for include files# so that we will find rppfConfig.h
+# add the binary tree to the search path for include files# so that we will find rpppConfig.h
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR})
 
 # target_include_directories(temp PUBLIC "${PROJECT_BINARY_DIR}") #example to add new executable : Step2
