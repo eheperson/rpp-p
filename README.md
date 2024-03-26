@@ -207,7 +207,7 @@ install(TARGETS temp DESTINATION bin)
 Yo do not have to make any changes in `'./CMakeLists.txt'` file. go to the `'/modules'` directory and create new folder with your new module name first.
 
 
-To the purpose of maintainability, test module renamed as `'${MODULE_1}'` in the `'modules/CMakeLists.txt'` file. If you want to add new module easily: 
+To the purpose of maintainability, test module renamed as `'${TESTLIB}'` in the `'modules/CMakeLists.txt'` file. If you want to add new module easily: 
 
 * **Step 1 :** just use the existing lines on `'modules/CMakeLists.txt'`  by copy and paste, change the required fields then : 
 ```

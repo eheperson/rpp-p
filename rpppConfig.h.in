@@ -7,5 +7,5 @@
 /* When cmake configures this header file thevalues for 
 @TexampleLib_VERSION_MAJOR@ and @exampleLib_VERSION_MINOR@ will be replaced. */
 
-// source code now requires some definitions USE_MODULE_1
-#define USE_MODULE_1
+// source code now requires some definitions USE_TESTLIB
+#define USE_TESTLIB

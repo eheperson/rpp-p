@@ -4,7 +4,7 @@
 #include <rpppConfig.h>
 
 
-#ifdef USE_MODULE_1
+#ifdef USE_TESTLIB
     #include "TestLib.h"
 #endif
 
@@ -28,7 +28,7 @@ int main(int arc, char ** argv) {
     }
     const std::string inputName = "Mr. Anderson";
 
-    #ifdef USE_MODULE_1
+    #ifdef USE_TESTLIB
         greetings(inputName);
     #else
         std::cout << " 'ellooooo from " << inputName << " main.cpp" << std::endl;
