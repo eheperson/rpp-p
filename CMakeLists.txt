@@ -1,4 +1,3 @@
-# ------------------------------------------------- Project Configs : Begin -------------------------------------------------
 cmake_minimum_required(VERSION 3.16...3.29 FATAL_ERROR)
 
 project(
@@ -18,10 +17,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # if(APPLE)
 #     enable_language(OBJC)
 # endif()
-# ------------------------------------------------- Project Configs : End -------------------------------------------------
 
-
-# ------------------------------------------------- RPATH Settings : Begin -------------------------------------------------
 set(CMAKE_MACOSX_RPATH 1)
 set(CMAKE_SKIP_BUILD_RPATH FALSE)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
@@ -33,23 +29,22 @@ list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib"
 if("${isSystemDir}" STREQUAL "-1")
     set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 endif("${isSystemDir}" STREQUAL "-1")
-# ------------------------------------------------- RPATH Settings : End -------------------------------------------------
 
+set(EXTERNAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../rpp-dev")
+set(SDL_DIR "${EXTERNAL_DIR}/SDL")
 
-# ------------------------------------------------- Source Code Configs : Begin -------------------------------------------------
+# Adjust the path to SDL3 as needed
+list(APPEND CMAKE_PREFIX_PATH "${SDL_DIR}")
+find_package(SDL3 REQUIRED)
+find_package(SDL2 REQUIRED CONFIG REQUIRED COMPONENTS SDL2)
+find_package(SDL2 REQUIRED CONFIG COMPONENTS SDL2main)
+
 configure_file(rpppConfig.h.in ${CMAKE_BINARY_DIR}/rpppConfig.h)
-add_subdirectory(external) 
 add_subdirectory(src)
-# ------------------------------------------------- Source Code Configs : End -------------------------------------------------
 
-
-# ------------------------------------------------- Installing : Begin -------------------------------------------------
 install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/rpppConfig.h" DESTINATION include)
-# ------------------------------------------------- Installing : End ---------------------------------------------------
 
-
-# ------------------------------------------------- Packing : Begin -------------------------------------------------
 set(CPACK_PACKAGE_VENDOR "eheperson")
 set(CPACK_SYSTEM_NAME "enivicivokki")
 set(CPACK_PACKAGE_DIRECTORY "${CMAKE_SOURCE_DIR}/out/package")
@@ -65,4 +60,3 @@ set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_NAME_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_NAME_VERSION_MINOR}")
 
 include(CPack)
-# ------------------------------------------------- Packing : End ---------------------------------------------------

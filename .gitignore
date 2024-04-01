@@ -1,41 +1,24 @@
-# ignoring out directory
-**/out
-**/external/builds
-**/external/sdl
-
-.vscode
-!.vscode/launch.json
-.DS_Store
-
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
+# Ignore object files and executables
 *.o
-*.obj
+*.out
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
+# Ignore compiled libraries
 *.a
 *.lib
 
-# Executables
-*.exe
-*.out
-*.app
+# Ignore build directories
+build/
+bin/
+out/
+
+
+# Ignore generated documentation
+doc/
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
