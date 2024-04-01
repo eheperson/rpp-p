@@ -36,8 +36,6 @@ set(SDL_DIR "${EXTERNAL_DIR}/SDL")
 # Adjust the path to SDL3 as needed
 list(APPEND CMAKE_PREFIX_PATH "${SDL_DIR}")
 find_package(SDL3 REQUIRED)
-find_package(SDL2 REQUIRED CONFIG REQUIRED COMPONENTS SDL2)
-find_package(SDL2 REQUIRED CONFIG COMPONENTS SDL2main)
 
 configure_file(rpppConfig.h.in ${CMAKE_BINARY_DIR}/rpppConfig.h)
 add_subdirectory(src)
