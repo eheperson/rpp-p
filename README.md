@@ -1,49 +1,58 @@
-# RPP-P (Rec-Play-Pause Pico)
- Template repository for cross-platform cpp development based on CMake build system Resources
+Here's an improved version of your README:
 
-> **NOTE :** This repository is tested only on MacOS and debian based Linux Distributions. Will be updated for Windows in the future.
+# RPP-P (Rec-Play-Pause Pico)
+
+Template repository for cross-platform C++ development based on the CMake build system.
+
+## Resources
+
+> **Note:** This repository has been tested on macOS and Debian-based Linux distributions. Windows support will be added in the future.
 
 ### Who is this repository for?
-* If project based on CMakeLists build system.
-* If project contains only few source files like `main.cpp`, `mylib.cpp` etc.
-* If your project requires 3Rd dependencies like `SDL3`.
-* If project requires develop extra libraries  like `TestLib.h`. add if them requires 3Rd dependencies.
-* If you need a C++ development laboratuary to test simple libraries requires 3Rd dependencies.
+- Projects based on the CMake build system.
+- Projects with only a few source files like `main.cpp`, `mylib.cpp`, etc.
+- Projects that require third-party dependencies like `SDL3`.
+- Projects that need additional libraries like `TestLib.h`, which may also require third-party dependencies.
+- Developers who need a C++ development laboratory to test simple libraries that require third-party dependencies.
 
 ### Requirements:
-* Cmake
-* Make (optional)
-* Git
-* Compiler xd
+- CMake
+- Make (optional)
+- Git
+- Compiler
 
+### Usage
 
-Generate the build files using CMake for Release configuration:
+#### Generate the build files using CMake (Release configuration):
+
+For Windows:
 ```bash
-# Windows
-cmake -G "MinGW Makefiles" -DUSE_TESTLIB=ON -DCMAKE_INSTALL_PREFIX=out/app -S . -B out//build
-
-# Unix/Linux
-cmake -DUSE_TESTLIB=ON -DCMAKE_INSTALL_PREFIX=out/app -S . -B out//build
-
+cmake -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=out/app -S . -B out/build
 ```
 
-Build the project (Release configuration will be used by default)
+For Unix/Linux:
 ```bash
-cmake  --build .//out//build -j 12 -v
+cmake -DCMAKE_INSTALL_PREFIX=out/app -S . -B out/build
 ```
 
-Install the project (Release configuration will be used by default)
+#### Build the project (Release configuration will be used by default):
 ```bash
-cmake --install .//out//build  --verbose
+cmake --build out/build -j 12 -v
 ```
 
-
-Package the project
+#### Install the project (Release configuration will be used by default):
 ```bash
-cpack .\out\build  -c Debug --verbose
+cmake --install out/build --verbose
 ```
 
---- 
+#### Package the project:
+```bash
+cpack out/build -c Debug --verbose
+```
+
+---
 
 ### TODOs
-- inlcude compiler options to the cmake
+- Include compiler options in the CMake configuration.
+- Update the `bake.sh` file to automate develop/build/test/clean process on Linux/Unix systems
+- Implement the `bake.bat` file to automate develop/build/test/clean process on Windows systems

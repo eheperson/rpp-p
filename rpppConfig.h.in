@@ -8,4 +8,4 @@
 @TexampleLib_VERSION_MAJOR@ and @exampleLib_VERSION_MINOR@ will be replaced. */
 
 // source code now requires some definitions USE_TESTLIB
-#define USE_TESTLIB
+#define USE_TESTLIB 1

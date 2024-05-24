@@ -38,7 +38,14 @@ list(APPEND CMAKE_PREFIX_PATH "${SDL_DIR}")
 find_package(SDL3 REQUIRED)
 
 configure_file(rpppConfig.h.in ${CMAKE_BINARY_DIR}/rpppConfig.h)
-add_subdirectory(src)
+
+add_executable(${PROJECT_NAME}
+	src/main.cpp
+  src/TestLib.h src/TestLib.cpp
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_BINARY_DIR})
+target_link_libraries(${PROJECT_NAME}  SDL3::SDL3)
 
 install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/rpppConfig.h" DESTINATION include)
