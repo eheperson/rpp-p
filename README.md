@@ -1,5 +1,3 @@
-Here's an improved version of your README:
-
 # RPP-P (Rec-Play-Pause Pico)
 
 Template repository for cross-platform C++ development based on the CMake build system.
